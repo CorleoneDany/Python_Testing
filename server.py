@@ -58,12 +58,13 @@ def purchasePlaces():
     today = datetime.now()
     today = today.strftime('%Y-%m-%d %H:%M:%S')
     placesRequired = int(request.form['places'])
+    price = placesRequired * 3
     if today < competition['date']:
-        if (int(club['points']) >= placesRequired):
+        if (int(club['points']) >= price):
             if placesRequired <= 12:
                 competition['numberOfPlaces'] = int(
                     competition['numberOfPlaces'])-placesRequired
-                club['points'] = int(club["points"]) - placesRequired
+                club['points'] = int(club["points"]) - price
                 flash('Great, booking complete!')
             else:
                 flash('Sorry, you can only book up to 12 places.')
@@ -71,10 +72,12 @@ def purchasePlaces():
             flash('Sorry, you do not have enough points.')
     else:
         flash('Sorry, the competition has already started.')
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', clubs=clubs, club=club, competitions=competitions)
 
 
-# TODO: Add route for points display
+@app.route('/clubs')
+def clubsPointsPage():
+    return render_template('clubs.html', clubs=clubs)
 
 
 @app.route('/logout')
