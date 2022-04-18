@@ -11,3 +11,4 @@ class ServerTester(HttpUser):
         self.client.post('/showSummary', data={'email': 'john@simplylift.co'})
         self.client.post(
             '/purchasePlaces', data={'places': '2', 'competition': 'Spring Festival', 'club': 'Simply Lift'})
+        self.client.get('/clubs')
